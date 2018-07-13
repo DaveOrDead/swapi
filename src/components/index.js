@@ -1,6 +1,6 @@
 import Container from "./Container";
 import Header from "./Header";
-import Icon from "./_Icon";
+import Icon from "./Icon";
 import _Icons from "./_Icons";
 import Label from "./Label";
 import Loading from "./Loading";

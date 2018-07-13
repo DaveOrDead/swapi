@@ -2,6 +2,7 @@
 import React, { Component, Fragment } from "react";
 // Components
 import PlanetsTable from "./../PlanetsTable";
+import PlanetDetails from "./../PlanetDetails";
 import {
     Container,
     Header,
@@ -87,6 +88,7 @@ class App extends Component {
                         ) : (
                             <PlanetsTable planets={planets} />
                         )}
+                        <PlanetDetails />
                     </Container>
                 </main>
             </Fragment>
