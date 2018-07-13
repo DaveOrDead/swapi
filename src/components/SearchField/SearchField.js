@@ -23,7 +23,6 @@ const SearchField = ({
                 text={labelText}
             />
 
-            <Icon className="c-search-field__icon" id={ICONS.magnifyingGlass} />
             <input
                 {...props}
                 autoComplete="off"
@@ -32,6 +31,8 @@ const SearchField = ({
                 type="search"
                 value={value}
             />
+
+            <Icon className="c-search-field__icon" id={ICONS.magnifyingGlass} />
         </div>
     );
 };

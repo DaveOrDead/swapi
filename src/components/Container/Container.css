@@ -1,6 +1,6 @@
 .l-container {
     max-width: var(--g-max-width);
-    padding: var(--g-spacing-5x-large);
+    padding: var(--g-spacing-2x-large);
 }
 
 .l-container--centered {
