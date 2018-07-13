@@ -1,0 +1,5 @@
+.c-header {
+    border-bottom: 3px solid var(--g-color-green-500);
+    padding: var(--g-spacing) 0 var(--g-spacing-x-small);
+    text-align: center;
+}

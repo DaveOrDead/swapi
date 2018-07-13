@@ -1,0 +1,6 @@
+.c-input-field__label {
+    color: var(--g-color-white);
+    display: block;
+    font-weight: 700;
+    margin-bottom: var(--g-spacing-2x-small);
+}

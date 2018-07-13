@@ -1,0 +1,87 @@
+/**
+ * 1. Reset UA styles.
+ */
+.c-table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%; /* 1 */
+}
+
+.c-table__tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.c-table__tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.c-table__td,
+.c-table__th {
+    padding: var(--g-spacing-small) var(--g-spacing-large);
+}
+
+/**
+ * Table header cells.
+ *
+ * 1. Reset UA styles.
+ */
+
+.c-table__th {
+    border-bottom: 2px solid var(--g-color-blue-500);
+    font-weight: 300;
+    font-size: var(--g-font-size-small);
+    text-transform: uppercase;
+    text-align: left; /* 1 */
+}
+
+/**
+ * Cell modifiers.
+ */
+
+.c-table__td--align-center,
+.c-table__th--align-center {
+    text-align: center;
+}
+
+.c-table__td--align-right,
+.c-table__th--align-right {
+    text-align: right;
+}
+
+/**
+ * Sort button.
+ */
+
+.c-table__sort-button {
+    color: var(--g-color-white);
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.c-table__sort-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: orange;
+}
+
+.c-table__sort-button.is-sorted {
+    color: orange;
+}
+
+/**
+ * Caret icon used in the sort button within each `<th>` element.
+ */
+
+.c-table__sort-button-icon {
+    height: var(--g-spacing-x-small);
+    margin-left: var(--g-spacing-x-small);
+    transform: translateY(-25%);
+    width: var(--g-spacing-small);
+}
+
+/**
+ * 1. Flips the caret icon upside down when column sorted in ascending order.
+ */
+
+.c-table__sort-button--asc .c-table__sort-button-icon {
+    transform: rotateX(180deg) translateY(25%); /* [1] */
+}

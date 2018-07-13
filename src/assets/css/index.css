@@ -1,0 +1,60 @@
+:root {
+    --g-font-size: 1rem;
+
+    --g-font-size-2x-large: calc(var(--g-font-size) + 6px);
+    --g-font-size-x-large: calc(var(--g-font-size) + 4px);
+    --g-font-size-large: calc(var(--g-font-size) + 2px);
+    --g-font-size-small: calc(var(--g-font-size) - 2px);
+    --g-font-size-x-small: calc(var(--g-font-size) - 4px);
+    --g-font-size-2x-small: calc(var(--g-font-size) - 6px);
+
+    --g-spacing: 1rem;
+    --g-spacing-6x-large: calc(var(--g-font-size) * 5);
+    --g-spacing-5x-large: calc(var(--g-font-size) * 4);
+    --g-spacing-4x-large: calc(var(--g-font-size) * 3.25);
+    --g-spacing-3x-large: calc(var(--g-font-size) * 2.5);
+    --g-spacing-2x-large: calc(var(--g-font-size) * 2);
+    --g-spacing-x-large: calc(var(--g-font-size) * 1.5);
+    --g-spacing-large: calc(var(--g-font-size) * 1.25);
+
+    --g-spacing-small: 0.75rem;
+    --g-spacing-x-small: 0.5rem;
+    --g-spacing-2x-small: 0.25rem;
+    --g-spacing-3x-small: 0.125rem;
+
+    --g-color-grey-900: #151515;
+
+    --g-color-blue-500: #3273c5;
+    --g-color-blue-300: #4a5977;
+
+    --g-color-green-500: #419a5a;
+
+    --g-color-white: #fff;
+    --g-color-black: #000;
+
+    --g-color-gold-300: #ccc38e;
+
+    --g-max-width: 75rem;
+
+    --g-focus-ring: 0 0 0 3px var(--g-color-blue-300);
+}
+
+body {
+    background-color: var(--g-color-grey-900);
+    background-image: url("../images/bg_stars_right.jpg"),
+        url("../images/bg_stars_left.jpg");
+    background-repeat: repeat-y;
+    background-position: top right, top left;
+    color: var(--g-color-white);
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: var(--g-color-gold-300);
+}
+
+svg {
+    fill: currentColor;
+    fill-rule: evenodd;
+    pointer-events: none;
+}
