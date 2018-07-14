@@ -71,7 +71,7 @@ class App extends Component {
                     />
 
                     <div className="c-data-list__item">
-                        <dt className="c-data-list__label">Residents</dt>
+                        <dt className="c-data-list__title">Residents</dt>
                         {loadingResidents ? (
                             <dd className="c-data-list__value">
                                 Loading&hellip;

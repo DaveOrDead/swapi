@@ -14,7 +14,7 @@ const TableBody = ({ children, qaHook }) => {
 
 TableBody.propTypes = {
     /**
-     * Child elements: only [Table row] and [Td] components.
+     * Child elements
      */
     children: PropTypes.node.isRequired,
     /**

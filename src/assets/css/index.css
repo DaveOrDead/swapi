@@ -35,6 +35,8 @@
 
     --g-color-gold-300: #ccc38e;
 
+    --g-color-border: rgba(255, 255, 255, 0.1);
+
     --g-max-width: 75rem;
 
     --g-focus-ring: 0 0 0 3px var(--g-color-blue-300);

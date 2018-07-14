@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "proptypes";
 import classNames from "classnames";
+// Assets
 import "./../Table.css";
 
 const Table = ({ children, qaHook }) => {
@@ -15,8 +16,7 @@ const Table = ({ children, qaHook }) => {
 
 Table.propTypes = {
     /**
-     * Child elements: only a [Table body] and a [Table header]
-     * component.
+     * Child elements
      */
     children: PropTypes.node.isRequired,
     /**

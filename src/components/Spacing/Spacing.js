@@ -1,3 +1,4 @@
+// Vendor
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -9,10 +10,16 @@ const Spacing = ({ children, size }) => (
 );
 
 Spacing.propTypes = {
+    /**
+     * Child elements.
+     */
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node
     ]),
+    /**
+     * The margin-bottom size class to be applied.
+     */
     size: PropTypes.string
 };
 

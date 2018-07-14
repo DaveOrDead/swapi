@@ -1,18 +1,18 @@
 .c-data-list {
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid var(--g-color-border);
+    border-top: 1px solid var(--g-color-border);
     display: flex;
     flex-flow: row wrap;
 }
 
 .c-data-list__item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--g-color-border);
+    border-right: 1px solid var(--g-color-border);
     padding: var(--g-spacing-small);
     width: 50%;
 }
 
-.c-data-list__label {
+.c-data-list__title {
     font-size: var(--g-font-size-small);
     margin-bottom: var(--g-spacing-x-small);
     text-transform: uppercase;

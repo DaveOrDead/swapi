@@ -14,7 +14,7 @@ const TableRow = ({ children, qaHook }) => {
 
 TableRow.propTypes = {
     /**
-     * Child elements: only [Td](/table/td) components.
+     * Child elements
      */
     children: PropTypes.node.isRequired,
     /**

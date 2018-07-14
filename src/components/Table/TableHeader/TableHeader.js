@@ -1,3 +1,4 @@
+// Vendor
 import React from "react";
 import PropTypes from "proptypes";
 import classNames from "classnames";
@@ -19,7 +20,7 @@ const TableHeader = ({ children, qaHook }) => {
 
 TableHeader.propTypes = {
     /**
-     * Child elements: only [Th](/table/th) components.
+     * Child elements
      */
     children: PropTypes.node.isRequired,
     /**
