@@ -70,7 +70,7 @@ class App extends Component {
                         />
 
                         <div className="c-data-list__item">
-                            <dt className="c-data-list__title">Residents</dt>
+                            <dt className="c-data-list__label">Residents</dt>
                             {(inhabitants.length &&
                                 inhabitants.map((res, i) => (
                                     <dd className="c-data-list__value" key={i}>

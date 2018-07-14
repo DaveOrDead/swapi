@@ -17,36 +17,48 @@ import { API } from "./../../utils";
 
 const PLANET_BASE_URL = "planets?format=json";
 
+const getEndpoints = (total, pageMax) => {
+    const endpoints = [];
+    const pageCount = Math.ceil(total / pageMax);
+
+    for (let i = 1; i < pageCount; i++) {
+        endpoints.push(`${PLANET_BASE_URL}&page=${i + 1}`);
+    }
+    return endpoints;
+};
+
 class App extends Component {
     state = {
         detailName: "",
         detailUrl: "",
         isDialogOpen: false,
+        isLoading: true,
         planets: [],
-        query: "",
-        isLoading: true
+        query: ""
     };
 
-    _results = [];
-
     async getData(url = PLANET_BASE_URL) {
-        console.log(url);
         try {
             const res = await API.get(url);
-            this._results = this._results.concat(res.data.results);
-            if (res.data.next) {
-                this.getData(res.data.next);
-            } else {
-                this.setState(
-                    {
-                        isLoading: false,
-                        planets: this._results.slice()
-                    },
-                    () => {
-                        this._results = [];
-                    }
+            const { results, count, next } = res.data;
+            let pagedResults = [];
+
+            if (next) {
+                const endpoints = getEndpoints(count, results.length);
+
+                const allResults = await Promise.all(
+                    endpoints.map(ep => API.get(ep))
+                );
+
+                pagedResults = allResults.reduce(
+                    (acc, res) => acc.concat(res.data.results),
+                    []
                 );
             }
+            this.setState({
+                isLoading: false,
+                planets: [...results, ...pagedResults]
+            });
         } catch (err) {
             console.log(err);
         }
