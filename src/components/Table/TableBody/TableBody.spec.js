@@ -1,14 +1,13 @@
 // Vendor
-import expect from 'expect';
-import {mount} from 'enzyme';
-import React from 'react';
+import expect from "expect";
+import { mount } from "enzyme";
+import React from "react";
 // Components
-import TableBody from './TableBody';
+import TableBody from "./TableBody";
 // Constants
-import {ASSERTIONS, STRINGS} from './../../../test/constants';
+import { ASSERTIONS, STRINGS } from "./../../../test/constants";
 
-
-const {childText} = STRINGS;
+const { childText } = STRINGS;
 
 describe(`Table body component`, () => {
     it(`should render`, () => {
@@ -21,8 +20,8 @@ describe(`Table body component`, () => {
                 </TableBody>
             </table>
         );
-        expect(wrapper.find('tr').length).toEqual(1);
-        expect(wrapper.find('td').length).toEqual(1);
+        expect(wrapper.find("tr").length).toEqual(1);
+        expect(wrapper.find("td").length).toEqual(1);
     });
 
     it(ASSERTIONS.qaHook, () => {
@@ -35,6 +34,6 @@ describe(`Table body component`, () => {
                 </TableBody>
             </table>
         );
-        expect(wrapper.find('.qa-table-tbody-qahook').length).toEqual(1);
+        expect(wrapper.find(".qa-table-tbody-qahook").length).toEqual(1);
     });
 });
