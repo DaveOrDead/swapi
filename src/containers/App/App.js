@@ -1,5 +1,6 @@
 // Vendor
 import React, { Component, Fragment } from "react";
+import { debounce, throttle } from "throttle-debounce";
 // Components
 import PlanetsTable from "./../PlanetsTable";
 import PlanetDetails from "./../PlanetDetails";
@@ -17,34 +18,42 @@ import { API } from "./../../utils";
 
 const PLANET_BASE_URL = "planets?format=json";
 
-const getEndpoints = (total, pageMax) => {
+const getEndpoints = (total, pageMax, url) => {
     const endpoints = [];
     const pageCount = Math.ceil(total / pageMax);
 
     for (let i = 1; i < pageCount; i++) {
-        endpoints.push(`${PLANET_BASE_URL}&page=${i + 1}`);
+        endpoints.push(`${url}&page=${i + 1}`);
     }
     return endpoints;
 };
 
 class App extends Component {
+    constructor() {
+        super();
+        this.debouncedQuery = debounce(500, this.sendQuery);
+        this.throttledQuery = throttle(1000, this.sendQuery);
+    }
+
     state = {
         error: "",
         isDialogOpen: false,
         isLoading: true,
         planets: [],
         query: "",
-        selectedPlanet: {}
+        selectedPlanet: {},
+        tableKey: 0
     };
 
     async getData(url = PLANET_BASE_URL) {
+        this._waitingFor = url;
         try {
             const res = await API.get(url);
             const { results, count, next } = res.data;
             let pagedResults = [];
 
             if (next) {
-                const endpoints = getEndpoints(count, results.length);
+                const endpoints = getEndpoints(count, results.length, url);
 
                 const allResults = await Promise.all(
                     endpoints.map(ep => API.get(ep))
@@ -55,14 +64,18 @@ class App extends Component {
                     []
                 );
             }
-            this.setState({
-                isLoading: false,
-                planets: [...results, ...pagedResults]
-            });
+            if (this._waitingFor === url) {
+                this.setState({
+                    isLoading: false,
+                    planets: [...results, ...pagedResults],
+                    tableKey: this.state.tableKey + 1
+                });
+            }
         } catch (err) {
             this.setState({
                 isLoading: false,
-                error: "Hmm. Something went wrong."
+                error: "Hmm. Something went wrong.",
+                tableKey: this.state.tableKey + 1
             });
         }
     }
@@ -70,6 +83,10 @@ class App extends Component {
     componentDidMount() {
         this.getData();
     }
+
+    sendQuery = query => {
+        this.getData(`${PLANET_BASE_URL}&search=${this.state.query}`);
+    };
 
     searchPlanets = e => {
         this.setState(
@@ -79,7 +96,12 @@ class App extends Component {
                 planets: []
             },
             () => {
-                this.getData(`${PLANET_BASE_URL}&search=${this.state.query}`);
+                const { query } = this.state;
+                if (query.length < 5) {
+                    this.throttledQuery(query);
+                } else {
+                    this.debouncedQuery(query);
+                }
             }
         );
     };
@@ -107,7 +129,8 @@ class App extends Component {
             isLoading,
             planets,
             query,
-            selectedPlanet
+            selectedPlanet,
+            tableKey
         } = this.state;
 
         return (
@@ -133,6 +156,7 @@ class App extends Component {
                                 {(planets &&
                                     planets.length && (
                                         <PlanetsTable
+                                            key={`planetTable${tableKey}`}
                                             planets={planets}
                                             viewDetails={this.openDialog}
                                         />
