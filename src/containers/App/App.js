@@ -129,13 +129,20 @@ class App extends Component {
                         {isLoading ? (
                             <Loading />
                         ) : (
-                            (error && <p>{error}</p>) || (
-                                <PlanetsTable
-                                    planets={planets}
-                                    viewDetails={this.openDialog}
-                                />
-                            )
+                            <Fragment>
+                                {(planets &&
+                                    planets.length && (
+                                        <PlanetsTable
+                                            planets={planets}
+                                            viewDetails={this.openDialog}
+                                        />
+                                    )) ||
+                                    ((error && <p>{error}</p>) || (
+                                        <p>No results found</p>
+                                    ))}
+                            </Fragment>
                         )}
+
                         <Dialog
                             isOpen={isDialogOpen}
                             onRequestClose={this.closeDialog}
