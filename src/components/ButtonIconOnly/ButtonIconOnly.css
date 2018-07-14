@@ -8,8 +8,3 @@
     height: var(--g-spacing-large);
     width: var(--g-spacing-large);
 }
-
-.c-button-icon-only__icon--large {
-    height: var(--g-spacing-2x-large);
-    width: var(--g-spacing-2x-large);
-}

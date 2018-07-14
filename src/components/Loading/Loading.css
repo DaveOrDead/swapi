@@ -1,36 +1,36 @@
-.c-loader,
-.c-loader::before,
-.c-loader::after {
-    animation: loader 1s infinite ease-in-out;
+.c-loading,
+.c-loading::before,
+.c-loading::after {
+    animation: loading 1s infinite ease-in-out;
     background: var(--g-color-white);
     height: var(--g-spacing-3x-large);
     width: 1em;
 }
 
-.c-loader {
+.c-loading {
     animation-delay: -0.16s;
     margin: var(--g-spacing-6x-large) auto;
     position: relative;
     transform: translateZ(0);
 }
 
-.c-loader::before,
-.c-loader::after {
+.c-loading::before,
+.c-loading::after {
     content: "";
     position: absolute;
     top: 0;
 }
 
-.c-loader::before {
+.c-loading::before {
     animation-delay: -0.32s;
     left: calc(var(--g-spacing-large) * -1);
 }
 
-.c-loader::after {
+.c-loading::after {
     left: var(--g-spacing-large);
 }
 
-@-webkit-keyframes loader {
+@-webkit-keyframes loading {
     0%,
     80%,
     100% {
@@ -43,7 +43,7 @@
     }
 }
 
-@keyframes loader {
+@keyframes loading {
     0%,
     80%,
     100% {
