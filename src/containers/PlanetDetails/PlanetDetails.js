@@ -8,23 +8,18 @@ import { API, formatIfNumeric } from "./../../utils";
 class App extends Component {
     state = {
         data: {},
-        isLoading: true
+        loadingResidents: true,
+        inhabitants: []
     };
 
-    async getData(url) {
+    async getData(residents) {
         try {
-            const res = await API.get(`${url}?format=json`);
-            const { residents } = res.data;
-            let inhabitants = [];
+            const inhabitants = await Promise.all(
+                residents.map(res => API.get(`${res}?format=json`))
+            );
 
-            if (residents && residents.length) {
-                inhabitants = await Promise.all(
-                    residents.map(res => API.get(`${res}?format=json`))
-                );
-            }
             this.setState({
-                isLoading: false,
-                data: res.data,
+                loadingResidents: false,
                 inhabitants
             });
         } catch (err) {
@@ -33,62 +28,78 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.getData(this.props.planetUrl);
+        const { planet } = this.props;
+        let loadingResidents = false;
+        if (planet.residents && planet.residents.length) {
+            loadingResidents = true;
+            this.getData(planet.residents);
+        }
+        this.setState({
+            data: planet,
+            loadingResidents
+        });
     }
 
     render() {
-        const { data, inhabitants, isLoading } = this.state;
+        const { data, inhabitants, loadingResidents } = this.state;
 
         return (
             <Fragment>
-                {isLoading ? (
-                    <Loading />
-                ) : (
-                    <DataList>
-                        <DataListItem
-                            title="Rotation Period"
-                            value={formatIfNumeric(data.rotation_period)}
-                        />
-                        <DataListItem
-                            title="Orbital Period"
-                            value={formatIfNumeric(data.orbital_period)}
-                        />
-                        <DataListItem
-                            title="Diameter"
-                            value={formatIfNumeric(data.diameter)}
-                        />
+                <DataList>
+                    <DataListItem
+                        title="Rotation Period"
+                        value={formatIfNumeric(data.rotation_period)}
+                    />
+                    <DataListItem
+                        title="Orbital Period"
+                        value={formatIfNumeric(data.orbital_period)}
+                    />
+                    <DataListItem
+                        title="Diameter"
+                        value={formatIfNumeric(data.diameter)}
+                    />
 
-                        <DataListItem title="Climate" value={data.climate} />
+                    <DataListItem title="Climate" value={data.climate} />
 
-                        <DataListItem title="Gravity" value={data.gravity} />
+                    <DataListItem title="Gravity" value={data.gravity} />
 
-                        <DataListItem title="Terrain" value={data.terrain} />
+                    <DataListItem title="Terrain" value={data.terrain} />
 
-                        <DataListItem
-                            title="Surface water"
-                            value={data.surface_water}
-                        />
+                    <DataListItem
+                        title="Surface water"
+                        value={data.surface_water}
+                    />
 
-                        <div className="c-data-list__item">
-                            <dt className="c-data-list__label">Residents</dt>
-                            {(inhabitants.length &&
-                                inhabitants.map((res, i) => (
-                                    <dd className="c-data-list__value" key={i}>
-                                        {res.data.name}
+                    <div className="c-data-list__item">
+                        <dt className="c-data-list__label">Residents</dt>
+                        {loadingResidents ? (
+                            <dd>
+                                <Loading />
+                            </dd>
+                        ) : (
+                            <Fragment>
+                                {(inhabitants.length &&
+                                    inhabitants.map((res, i) => (
+                                        <dd
+                                            className="c-data-list__value"
+                                            key={i}
+                                        >
+                                            {res.data.name}
+                                        </dd>
+                                    ))) || (
+                                    <dd>
+                                        <abbr
+                                            className="c-data-list__value"
+                                            title="Not applicable"
+                                        >
+                                            N/A
+                                        </abbr>
                                     </dd>
-                                ))) || (
-                                <dd>
-                                    <abbr
-                                        className="c-data-list__value"
-                                        title="Not applicable"
-                                    >
-                                        N/A
-                                    </abbr>
-                                </dd>
-                            )}
-                        </div>
-                    </DataList>
-                )}
+                                )}
+                            </Fragment>
+                        )}
+                    </div>
+                </DataList>
             </Fragment>
         );
     }

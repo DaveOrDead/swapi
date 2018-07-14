@@ -29,8 +29,7 @@ const getEndpoints = (total, pageMax) => {
 
 class App extends Component {
     state = {
-        detailName: "",
-        detailUrl: "",
+        selectedPlanet: {},
         isDialogOpen: false,
         isLoading: true,
         planets: [],
@@ -84,19 +83,22 @@ class App extends Component {
     openDialog = e => {
         this.setState({
             isDialogOpen: true,
-            detailUrl: e.target.value,
-            detailName: e.target.innerText
+            selectedPlanet: this.state.planets.find(
+                planet => e.target.value === planet.url
+            )
         });
     };
 
     closeDialog = () => {
-        this.setState({ isDialogOpen: false, detailName: "", detailUrl: "" });
+        this.setState({
+            isDialogOpen: false,
+            selectedPlanet: {}
+        });
     };
 
     render() {
         const {
-            detailName,
-            detailUrl,
+            selectedPlanet,
             isDialogOpen,
             isLoading,
             planets,
@@ -131,9 +133,9 @@ class App extends Component {
                             isOpen={isDialogOpen}
                             onRequestClose={this.closeDialog}
                             contentLabel="Planet Dialog"
-                            title={detailName}
+                            title={selectedPlanet.name}
                         >
-                            <PlanetDetails planetUrl={detailUrl} />
+                            <PlanetDetails planet={selectedPlanet} />
                         </Dialog>
                     </Container>
                 </main>
