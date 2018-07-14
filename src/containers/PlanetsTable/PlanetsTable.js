@@ -1,5 +1,6 @@
 // Vendor
 import React from "react";
+import PropTypes from "prop-types";
 // Components
 import {
     ButtonLink,
@@ -22,7 +23,7 @@ const PlanetsTable = ({ planets, viewDetails }) => (
         dataType="string"
     >
         {({ data, sort, sortedDirection, sortedColumnName }) => (
-            <Table className="c-table">
+            <Table>
                 <TableHeader>
                     <Th
                         columnName="name"
@@ -55,11 +56,7 @@ const PlanetsTable = ({ planets, viewDetails }) => (
                                     text={planet.name}
                                 />
                             </Td>
-                            <Td>
-                                <span className="h-sentence-case">
-                                    {planet.terrain}
-                                </span>
-                            </Td>
+                            <Td>{planet.terrain}</Td>
                             <Td isAlignedRight>
                                 {formatIfNumeric(planet.population)}
                             </Td>
@@ -70,5 +67,17 @@ const PlanetsTable = ({ planets, viewDetails }) => (
         )}
     </TableContainer>
 );
+
+PlanetsTable.propTypes = {
+    /**
+     * The table's data, as an array of objects.
+     */
+    // eslint-disable-next-line react/forbid-prop-types
+    planets: PropTypes.array,
+    /**
+     * The function to trigger the planet details dialog.
+     */
+    viewDetails: PropTypes.func
+};
 
 export default PlanetsTable;

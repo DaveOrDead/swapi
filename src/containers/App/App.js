@@ -29,11 +29,12 @@ const getEndpoints = (total, pageMax) => {
 
 class App extends Component {
     state = {
-        selectedPlanet: {},
+        error: "",
         isDialogOpen: false,
         isLoading: true,
         planets: [],
-        query: ""
+        query: "",
+        selectedPlanet: {}
     };
 
     async getData(url = PLANET_BASE_URL) {
@@ -59,7 +60,10 @@ class App extends Component {
                 planets: [...results, ...pagedResults]
             });
         } catch (err) {
-            console.log(err);
+            this.setState({
+                isLoading: false,
+                error: "Hmm. Something went wrong."
+            });
         }
     }
 
@@ -98,11 +102,12 @@ class App extends Component {
 
     render() {
         const {
-            selectedPlanet,
+            error,
             isDialogOpen,
             isLoading,
             planets,
-            query
+            query,
+            selectedPlanet
         } = this.state;
 
         return (
@@ -124,10 +129,12 @@ class App extends Component {
                         {isLoading ? (
                             <Loading />
                         ) : (
-                            <PlanetsTable
-                                planets={planets}
-                                viewDetails={this.openDialog}
-                            />
+                            (error && <p>{error}</p>) || (
+                                <PlanetsTable
+                                    planets={planets}
+                                    viewDetails={this.openDialog}
+                                />
+                            )
                         )}
                         <Dialog
                             isOpen={isDialogOpen}

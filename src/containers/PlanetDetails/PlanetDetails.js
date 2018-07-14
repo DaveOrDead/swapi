@@ -1,15 +1,17 @@
 // Vendor
 import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 // Components
-import { DataList, DataListItem, Loading } from "./../../components";
+import { DataList, DataListItem } from "./../../components";
 // Utils
 import { API, formatIfNumeric } from "./../../utils";
 
-class App extends Component {
+class PlanetDetails extends Component {
     state = {
-        data: {},
-        loadingResidents: true,
-        inhabitants: []
+        data: this.props.planet,
+        loadingResidents: this.props.planet.residents.length,
+        inhabitants: [],
+        error: ""
     };
 
     async getData(residents) {
@@ -20,28 +22,26 @@ class App extends Component {
 
             this.setState({
                 loadingResidents: false,
-                inhabitants
+                inhabitants,
+                error: ""
             });
         } catch (err) {
-            console.log(err);
+            this.setState({
+                loadingResidents: false,
+                error: "Uh oh, we couldn't find any residents."
+            });
         }
     }
 
     componentDidMount() {
         const { planet } = this.props;
-        let loadingResidents = false;
         if (planet.residents && planet.residents.length) {
-            loadingResidents = true;
             this.getData(planet.residents);
         }
-        this.setState({
-            data: planet,
-            loadingResidents
-        });
     }
 
     render() {
-        const { data, inhabitants, loadingResidents } = this.state;
+        const { data, inhabitants, loadingResidents, error } = this.state;
 
         return (
             <Fragment>
@@ -86,16 +86,21 @@ class App extends Component {
                                         >
                                             {res.data.name}
                                         </dd>
-                                    ))) || (
-                                    <dd>
-                                        <abbr
-                                            className="c-data-list__value"
-                                            title="Not applicable"
-                                        >
-                                            N/A
-                                        </abbr>
-                                    </dd>
-                                )}
+                                    ))) ||
+                                    ((error && (
+                                        <dd className="c-data-list__value">
+                                            {error}
+                                        </dd>
+                                    )) || (
+                                        <dd>
+                                            <abbr
+                                                className="c-data-list__value"
+                                                title="Not applicable"
+                                            >
+                                                N/A
+                                            </abbr>
+                                        </dd>
+                                    ))}
                             </Fragment>
                         )}
                     </div>
@@ -105,4 +110,12 @@ class App extends Component {
     }
 }
 
-export default App;
+PlanetDetails.propTypes = {
+    /**
+     * The initial planet details - excluding person details
+     */
+    // eslint-disable-next-line react/forbid-prop-types
+    planet: PropTypes.object
+};
+
+export default PlanetDetails;

@@ -41,10 +41,8 @@
  *
  * 1. Allows a dialog to be a fluid height and width when the viewport gets
  *    small.
- * 2. When the viewport's height is small enable vertical scrolling within a
- *    dialog so all of it's content doesn't get cut off.
- * 3. Allows space for decorative elements
- * 4. Allow absolute positioning of decorative elements
+ * 2. Allows space for decorative elements
+ * 3. Allow absolute positioning of decorative elements
  */
 
 .c-dialog {
@@ -58,13 +56,17 @@
     border-radius: 0 0 var(--g-spacing-x-small) var(--g-spacing-x-small);
     max-height: 100%; /* [1] */
     max-width: 30rem;
-    overflow-x: auto; /* [2] */
+    overflow: hidden;
     opacity: 0;
     padding: var(--g-spacing-small) var(--g-spacing-large)
-        var(--g-spacing-2x-large); /* [3] */
-    position: relative; /* [4] */
+        var(--g-spacing-2x-large); /* [2] */
+    position: relative; /* [3] */
 }
 
+/*
+ * Before and after elements are used for background embelishments
+ * of fixed size, hence the use of exact `px`
+ */
 .c-dialog::before {
     bottom: 0;
     content: "";
