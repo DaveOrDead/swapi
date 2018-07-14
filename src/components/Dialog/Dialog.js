@@ -17,41 +17,15 @@ const Dialog = ({
     title
 }) => (
     <Modal
+        contentLabel={contentLabel}
+        className="c-dialog"
         isOpen={isOpen}
         onAfterOpen={openModal}
         onRequestClose={onRequestClose}
-        contentLabel={contentLabel}
-        style={{
-            overlay: {
-                zIndex: "9999",
-                backgroundColor: "rgba(0, 0, 0, 0.9)",
-                display: "flex",
-                justifyContent: "center"
-            },
-            content: {
-                border: "none",
-                borderTop: "3px solid #9e4f60",
-                borderRadius: "0 0 0.5rem 0.5rem",
-                backgroundColor: "#282727",
-                backgroundImage:
-                    "url('https://static-mh.content.disney.io/starwars/assets/shared/bg_hash_top-dca2c5ab1b2e.png')",
-                backgroundSize: "7px",
-                backgroundRepeat: "repeat-x",
-                backgroundPosition: "top left",
-                bottom: "auto",
-                margin: "0 auto",
-                minWidth: "20rem",
-                maxWidth: "30rem",
-                overflow: "hidden",
-                padding: "0.75rem 1.25rem 2rem",
-                top: "var(--g-spacing-2x-large)",
-                left: "auto",
-                right: "auto"
-            }
-        }}
+        overlayClassName="c-dialog-overlay"
     >
-        <div className="c-dialog-header">
-            <h3 className="c-dialog-title">{title}</h3>
+        <div className="c-dialog__header">
+            <h3 className="c-dialog__title">{title}</h3>
 
             {hasCloseButton && (
                 <ButtonIconOnly

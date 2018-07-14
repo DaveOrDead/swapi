@@ -1,49 +1,114 @@
+/**
+ * Remove the ability to vertically scroll the page when a dialog is open.
+ *
+ * 1. We can't use the more explicit: `overflow-y` as Safari doesn't like it.
+ */
 .ReactModal__Body--open {
-    overflow: hidden;
+    overflow: hidden; /* [1] */
 }
 
-.ReactModal__Content--after-open {
-    overflow: hidden;
+/**
+ * The dialog container that contains both the dialog itself and applies the
+ * overlay. The default dialog covers the entire viewport
+ *
+ * 1. Horizontally and vertically position the dialog smack in the middle of
+ *    the viewport.
+ * 2. Semi-transparent background overlay affect.
+ * 3. Fix the position and cover the viewport entirely.
+ * 4. No spillage ever!
+ * 5. Prevents a dialog from butting up to its container when its `max-height`
+ *    and `max-width` kicks in.
+ * 6. Make the dialog sit above everything else in the stacking context.
+ */
+
+.c-dialog-overlay {
+    align-items: center; /* [1] */
+    background-color: rgba(0, 0, 0, 0.7); /* [2] */
+    bottom: 0; /* [3] */
+    display: flex; /* [1] */
+    justify-content: center; /* [1] */
+    left: 0; /* [3] */
+    overflow: hidden; /* [4] */
+    padding: var(-g-spacing-2x-large); /* [5] */
+    position: fixed; /* [3] */
+    right: 0; /* [3] */
+    top: 0; /* [3] */
+    z-index: 999; /* [6] */
 }
 
-.ReactModal__Content--after-open::before {
-    content: "";
-    left: 50%;
-    width: 120px;
-    height: 8px;
-    background-color: rgba(0, 0, 0, 0.9);
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    position: absolute;
+/**
+ * The dialog.
+ *
+ * 1. Allows a dialog to be a fluid height and width when the viewport gets
+ *    small.
+ * 2. When the viewport's height is small enable vertical scrolling within a
+ *    dialog so all of it's content doesn't get cut off.
+ * 3. Allows space for decorative elements
+ * 4. Allow absolute positioning of decorative elements
+ */
+
+.c-dialog {
+    animation: slightFade 0.3s forwards;
+    background-color: var(--g-color-grey-700);
+    background-image: url("./../../assets/images/bg_hash_top.png");
+    background-size: 7px;
+    background-repeat: repeat-x;
+    background-position: top left;
+    border-top: 3px solid var(--g-color-purple-500);
+    border-radius: 0 0 var(--g-spacing-x-small) var(--g-spacing-x-small);
+    max-height: 100%; /* [1] */
+    max-width: 30rem;
+    overflow-x: auto; /* [2] */
+    opacity: 0;
+    padding: var(--g-spacing-small) var(--g-spacing-large)
+        var(--g-spacing-2x-large); /* [3] */
+    position: relative; /* [4] */
+}
+
+.c-dialog::before {
     bottom: 0;
+    content: "";
+    background-color: rgba(0, 0, 0, 0.8);
+    border-top-left-radius: var(--g-spacing);
+    border-top-right-radius: var(--g-spacing);
+    height: var(--g-spacing-x-small);
+    left: 50%;
+    position: absolute;
     transform: translateX(-50%);
+    width: 8rem;
 }
 
-.ReactModal__Content--after-open::after {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 47px;
-    height: 47px;
-    opacity: 0.06;
-    z-index: 1;
-    background-image: url(https://static-mh.content.disney.io/starwars/assets/shared/decal-a67af2e7d567.png);
+.c-dialog::after {
+    background-image: url("./../../assets/images/decal.png");
     background-size: 300% 200%;
     background-position: -100% 0;
-    right: 10px;
     bottom: -22px;
+    content: "";
+    display: block;
+    height: 47px;
+    opacity: 0.06;
+    position: absolute;
+    right: 10px;
+    width: 47px;
+    z-index: 1;
 }
 
-.c-dialog-header {
+.c-dialog__header {
     align-items: center;
     display: flex;
     justify-content: space-between;
     margin-bottom: var(--g-spacing-large);
 }
 
-.c-dialog-title {
+.c-dialog__title {
+    color: var(--g-color-grey-400);
     font-size: var(--g-font-size-x-large);
-    color: #aaa;
     font-weight: 300;
     letter-spacing: 1px;
+}
+
+@keyframes slightFade {
+    100% {
+        opacity: 1;
+    }
 }
