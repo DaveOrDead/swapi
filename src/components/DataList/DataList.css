@@ -1,0 +1,25 @@
+.c-data-list {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.c-data-list__item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    padding: var(--g-spacing-small);
+    width: 50%;
+}
+
+.c-data-list__label {
+    font-size: var(--g-font-size-small);
+    margin-bottom: var(--g-spacing-x-small);
+    text-transform: uppercase;
+}
+
+.c-data-list__value {
+    color: var(--g-color-grey-400);
+    font-size: var(--g-font-size-x-small);
+    text-transform: capitalize;
+}

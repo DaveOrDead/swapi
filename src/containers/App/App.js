@@ -5,6 +5,7 @@ import PlanetsTable from "./../PlanetsTable";
 import PlanetDetails from "./../PlanetDetails";
 import {
     Container,
+    Dialog,
     Header,
     _Icons as Icons,
     Loading,
@@ -18,6 +19,9 @@ const PLANET_BASE_URL = "planets?format=json";
 
 class App extends Component {
     state = {
+        detailName: "",
+        detailUrl: "",
+        isDialogOpen: false,
         planets: [],
         query: "",
         isLoading: true
@@ -65,12 +69,32 @@ class App extends Component {
         );
     };
 
+    openDialog = e => {
+        this.setState({
+            isDialogOpen: true,
+            detailUrl: e.target.value,
+            detailName: e.target.innerText
+        });
+    };
+
+    closeDialog = () => {
+        this.setState({ isDialogOpen: false, detailName: "", detailUrl: "" });
+    };
+
     render() {
-        const { isLoading, planets, query } = this.state;
+        const {
+            detailName,
+            detailUrl,
+            isDialogOpen,
+            isLoading,
+            planets,
+            query
+        } = this.state;
 
         return (
             <Fragment>
                 <Icons />
+
                 <Header />
 
                 <main>
@@ -86,9 +110,19 @@ class App extends Component {
                         {isLoading ? (
                             <Loading />
                         ) : (
-                            <PlanetsTable planets={planets} />
+                            <PlanetsTable
+                                planets={planets}
+                                viewDetails={this.openDialog}
+                            />
                         )}
-                        <PlanetDetails />
+                        <Dialog
+                            isOpen={isDialogOpen}
+                            onRequestClose={this.closeDialog}
+                            contentLabel="Planet Dialog"
+                            title={detailName}
+                        >
+                            <PlanetDetails planetUrl={detailUrl} />
+                        </Dialog>
                     </Container>
                 </main>
             </Fragment>

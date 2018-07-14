@@ -2,6 +2,7 @@
 import React from "react";
 // Components
 import {
+    ButtonLink,
     Table,
     TableBody,
     TableContainer,
@@ -11,9 +12,9 @@ import {
     Th
 } from "./../../components";
 // Utils
-import { formatNumber, isNumeric } from "./../../utils";
+import { formatIfNumeric } from "./../../utils";
 
-const PlanetsTable = ({ planets }) => (
+const PlanetsTable = ({ planets, viewDetails }) => (
     <TableContainer
         data={planets}
         sortedDirection="asc"
@@ -45,7 +46,11 @@ const PlanetsTable = ({ planets }) => (
                     {data.map((planet, i) => (
                         <TableRow key={i}>
                             <Td>
-                                <a href="/planet/:id">{planet.name}</a>
+                                <ButtonLink
+                                    onClick={viewDetails}
+                                    value={planet.url}
+                                    text={planet.name}
+                                />
                             </Td>
                             <Td>
                                 <span className="h-sentence-case">
@@ -53,9 +58,7 @@ const PlanetsTable = ({ planets }) => (
                                 </span>
                             </Td>
                             <Td isAlignedRight>
-                                {isNumeric(planet.population)
-                                    ? formatNumber(planet.population)
-                                    : planet.population}
+                                {formatIfNumeric(planet.population)}
                             </Td>
                         </TableRow>
                     ))}

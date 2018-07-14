@@ -27,7 +27,7 @@
  */
 
 .c-table__th {
-    border-bottom: 2px solid var(--g-color-blue-500);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     font-weight: 300;
     font-size: var(--g-font-size-small);
     text-transform: uppercase;

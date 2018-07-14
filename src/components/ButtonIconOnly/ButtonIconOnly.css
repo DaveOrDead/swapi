@@ -1,0 +1,15 @@
+.c-button-icon-only {
+    line-height: 1;
+}
+
+.c-button-icon-only__icon {
+    color: var(--g-color-white);
+    display: block;
+    height: var(--g-spacing-large);
+    width: var(--g-spacing-large);
+}
+
+.c-button-icon-only__icon--large {
+    height: var(--g-spacing-2x-large);
+    width: var(--g-spacing-2x-large);
+}

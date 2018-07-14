@@ -15,9 +15,9 @@ const _Icons = () => (
             <path d="M0 0l4 4 4-4" fill="currentColor" fillRule="evenodd" />
         </symbol>
 
-        <symbol id={ICONS.caretInverted} viewBox="0 0 10 7">
+        <symbol id={ICONS.cross} viewBox="0 0 16 20">
             <path
-                d="M4.95 4.07L2.12 1.244c-.39-.39-1.023-.39-1.413 0-.39.39-.39 1.024 0 1.414L3.95 5.9c.187.187.44.292.707.292h.585c.266 0 .52-.105.708-.292l3.242-3.243c.39-.39.39-1.024 0-1.414-.39-.39-1.024-.39-1.414 0L4.95 4.07z"
+                d="M16.4.4l-.8-.8L8 7.2.4-.4l-.8.8L7.2 8l-7.6 7.6.8.8L8 8.8l7.6 7.6.8-.8L8.8 8z"
                 fill="currentColor"
                 fillRule="evenodd"
             />

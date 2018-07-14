@@ -1,0 +1,49 @@
+.ReactModal__Body--open {
+    overflow: hidden;
+}
+
+.ReactModal__Content--after-open {
+    overflow: hidden;
+}
+
+.ReactModal__Content--after-open::before {
+    content: "";
+    left: 50%;
+    width: 120px;
+    height: 8px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+
+.ReactModal__Content--after-open::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 47px;
+    height: 47px;
+    opacity: 0.06;
+    z-index: 1;
+    background-image: url(https://static-mh.content.disney.io/starwars/assets/shared/decal-a67af2e7d567.png);
+    background-size: 300% 200%;
+    background-position: -100% 0;
+    right: 10px;
+    bottom: -22px;
+}
+
+.c-dialog-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--g-spacing-large);
+}
+
+.c-dialog-title {
+    font-size: var(--g-font-size-x-large);
+    color: #aaa;
+    font-weight: 300;
+    letter-spacing: 1px;
+}

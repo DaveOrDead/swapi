@@ -1,5 +1,6 @@
 import API from "./api";
 import {
+    formatIfNumeric,
     formatNumber,
     isNumeric,
     sortObjectKeyNumbers,
@@ -10,9 +11,10 @@ import { alphabetise, sortObjectKeyStrings } from "./string";
 export {
     alphabetise,
     API,
-    sortObjectKeyStrings,
+    formatIfNumeric,
     formatNumber,
     isNumeric,
     sortObjectKeyNumbers,
+    sortObjectKeyStrings,
     subtract
 };

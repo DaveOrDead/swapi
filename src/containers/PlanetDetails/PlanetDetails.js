@@ -1,9 +1,9 @@
 // Vendor
 import React, { Component, Fragment } from "react";
 // Components
-import { Container, Header, Loading } from "./../../components";
+import { DataList, DataListItem, Loading } from "./../../components";
 // Utils
-import { API } from "./../../utils";
+import { API, formatIfNumeric } from "./../../utils";
 
 class App extends Component {
     state = {
@@ -13,7 +13,7 @@ class App extends Component {
 
     async getData(url) {
         try {
-            const res = await API.get(`${url}/?format=json`);
+            const res = await API.get(`${url}?format=json`);
             const { residents } = res.data;
             let inhabitants = [];
 
@@ -33,7 +33,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.getData("https://swapi.co/api/planets/3");
+        this.getData(this.props.planetUrl);
     }
 
     render() {
@@ -41,46 +41,54 @@ class App extends Component {
 
         return (
             <Fragment>
-                <Header />
+                {isLoading ? (
+                    <Loading />
+                ) : (
+                    <DataList>
+                        <DataListItem
+                            title="Rotation Period"
+                            value={formatIfNumeric(data.rotation_period)}
+                        />
+                        <DataListItem
+                            title="Orbital Period"
+                            value={formatIfNumeric(data.orbital_period)}
+                        />
+                        <DataListItem
+                            title="Diameter"
+                            value={formatIfNumeric(data.diameter)}
+                        />
 
-                <main>
-                    <Container isCentered>
-                        {isLoading ? (
-                            <Loading />
-                        ) : (
-                            <dl>
-                                <dt>Name</dt>
-                                <dd>{data.name}</dd>
+                        <DataListItem title="Climate" value={data.climate} />
 
-                                <dt>Rotation Period</dt>
-                                <dd>{data.orbital_period}</dd>
+                        <DataListItem title="Gravity" value={data.gravity} />
 
-                                <dt>Orbital Period</dt>
-                                <dd>{data.orbital_period}</dd>
+                        <DataListItem title="Terrain" value={data.terrain} />
 
-                                <dt>Diameter</dt>
-                                <dd>{data.diameter}</dd>
+                        <DataListItem
+                            title="Surface water"
+                            value={data.surface_water}
+                        />
 
-                                <dt>Climate</dt>
-                                <dd>{data.climate}</dd>
-
-                                <dt>Gravity</dt>
-                                <dd>{data.gravity}</dd>
-
-                                <dt>Terrain</dt>
-                                <dd>{data.terrain}</dd>
-
-                                <dt>Surface water</dt>
-                                <dd>{data.surface_water}</dd>
-
-                                <dt>Residents</dt>
-                                {inhabitants.map((res, i) => (
-                                    <dd key={i}>{res.data.name}</dd>
-                                ))}
-                            </dl>
-                        )}
-                    </Container>
-                </main>
+                        <div className="c-data-list__item">
+                            <dt className="c-data-list__title">Residents</dt>
+                            {(inhabitants.length &&
+                                inhabitants.map((res, i) => (
+                                    <dd className="c-data-list__value" key={i}>
+                                        {res.data.name}
+                                    </dd>
+                                ))) || (
+                                <dd>
+                                    <abbr
+                                        className="c-data-list__value"
+                                        title="Not applicable"
+                                    >
+                                        N/A
+                                    </abbr>
+                                </dd>
+                            )}
+                        </div>
+                    </DataList>
+                )}
             </Fragment>
         );
     }
