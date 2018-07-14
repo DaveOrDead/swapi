@@ -5,66 +5,53 @@ import PropTypes from "proptypes";
 // Utils
 import { sortObjectKeyStrings, sortObjectKeyNumbers } from "./../../../utils";
 
+const reverseDirection = dir => (dir === "asc" ? "desc" : "asc");
+
 const getSortFunctionByType = dataType =>
     dataType === "number" ? sortObjectKeyNumbers : sortObjectKeyStrings;
 
-const sort = (field, data, dataType) => {
+const sort = ({ sortedColumnName, data, sortedDirection, dataType }) => {
     const func = getSortFunctionByType(dataType);
-    return data.sort(func(field));
+    const sortedData = data.sort(func(sortedColumnName));
+    return sortedDirection === "desc" ? sortedData : sortedData.reverse();
 };
 
 class TableContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.onSort = this.onSort.bind(this);
-        this.state = {
-            data: null,
-            sortedColumnName: null
-        };
-    }
+    state = {
+        data: sort({ ...this.props }),
+        sortedDirection: reverseDirection(this.props.sortedDirection),
+        sortedColumnName: this.props.sortedColumnName
+    };
 
-    componentWillMount() {
-        const { data, sortedColumnName, sortedDirection } = this.props;
-        const sortedData = sortedColumnName
-            ? sort(sortedColumnName, data)
-            : data;
-
+    onSort = (sortedColumnName, sortedDirection, isSorted, dataType) => {
+        const { data } = this.state;
+        const sortedData = !isSorted
+            ? sort({
+                  sortedColumnName,
+                  data,
+                  sortedDirection,
+                  dataType
+              })
+            : data.reverse();
         this.setState({
-            data:
-                sortedDirection === "desc" ? sortedData : sortedData.reverse(),
-            sortedDirection,
+            data: sortedData,
+            sortedDirection: reverseDirection(sortedDirection),
             sortedColumnName
         });
-    }
-
-    onSort(field, currentSortedDirection, isSorted, dataType) {
-        const { data } = this.state;
-        const sortedData = !isSorted ? sort(field, data, dataType) : data;
-
-        this.setState({
-            data: !isSorted ? sortedData : sortedData.reverse(),
-            sortedDirection: currentSortedDirection === "asc" ? "desc" : "asc",
-            sortedColumnName: field
-        });
-    }
+    };
 
     render() {
         const { children: render } = this.props;
-
-        const { data, sortedDirection, sortedColumnName } = this.state;
-
         return render({
-            data,
             sort: this.onSort,
-            sortedDirection,
-            sortedColumnName
+            ...this.state
         });
     }
 }
 
 TableContainer.propTypes = {
     /**
-     * A function which wraps a child element: only a [Table](/table/table) component.
+     * A function which wraps a table element.
      */
     children: PropTypes.func.isRequired,
     /**
@@ -78,22 +65,7 @@ TableContainer.propTypes = {
      */
     sortedDirection: PropTypes.string,
     /**
-     * A name of the data property to sort by default, for example, if one of your objects from
-     * the `data` property looked like this:
-     *
-     * ```
-     * {
-     *     created: '12 Nov 2016',
-     *     emails: 3,
-     *     id: 11234,
-     *     listName: 'Hawkland Raiders',
-     *     sent: 0,
-     *     status: 'inactive'
-     * }
-     * ```
-     *
-     * And you wanted to sort by the `listName` property then the `sortedColumnName` property
-     * would look like this: `sortedColumnName={listName}`.
+     * A name of the data property to sort by default
      */
     sortedColumnName: PropTypes.string
 };

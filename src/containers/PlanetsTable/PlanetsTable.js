@@ -19,6 +19,7 @@ const PlanetsTable = ({ planets, viewDetails }) => (
         data={planets}
         sortedDirection="desc"
         sortedColumnName="name"
+        dataType="string"
     >
         {({ data, sort, sortedDirection, sortedColumnName }) => (
             <Table className="c-table">
