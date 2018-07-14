@@ -17,7 +17,7 @@ import { formatIfNumeric } from "./../../utils";
 const PlanetsTable = ({ planets, viewDetails }) => (
     <TableContainer
         data={planets}
-        sortedDirection="asc"
+        sortedDirection="desc"
         sortedColumnName="name"
     >
         {({ data, sort, sortedDirection, sortedColumnName }) => (
@@ -25,6 +25,7 @@ const PlanetsTable = ({ planets, viewDetails }) => (
                 <TableHeader>
                     <Th
                         columnName="name"
+                        dataType="string"
                         sort={sort}
                         sortedColumnName={sortedColumnName}
                         sortedDirection={sortedDirection}
@@ -34,6 +35,7 @@ const PlanetsTable = ({ planets, viewDetails }) => (
                     <Th>Terrain</Th>
                     <Th
                         columnName="population"
+                        dataType="number"
                         isAlignedRight
                         sort={sort}
                         sortedColumnName={sortedColumnName}

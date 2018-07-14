@@ -5,13 +5,11 @@ import PropTypes from "proptypes";
 // Utils
 import { sortObjectKeyStrings, sortObjectKeyNumbers } from "./../../../utils";
 
-const getSortFunctionByType = (field, data) => {
-    const type = typeof data[0][field];
-    return type === "number" ? sortObjectKeyNumbers : sortObjectKeyStrings;
-};
+const getSortFunctionByType = dataType =>
+    dataType === "number" ? sortObjectKeyNumbers : sortObjectKeyStrings;
 
-const sort = (field, data) => {
-    const func = getSortFunctionByType(field, data);
+const sort = (field, data, dataType) => {
+    const func = getSortFunctionByType(dataType);
     return data.sort(func(field));
 };
 
@@ -39,9 +37,9 @@ class TableContainer extends Component {
         });
     }
 
-    onSort(field, currentSortedDirection, isSorted) {
+    onSort(field, currentSortedDirection, isSorted, dataType) {
         const { data } = this.state;
-        const sortedData = !isSorted ? sort(field, data) : data;
+        const sortedData = !isSorted ? sort(field, data, dataType) : data;
 
         this.setState({
             data: !isSorted ? sortedData : sortedData.reverse(),

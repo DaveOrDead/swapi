@@ -7,19 +7,39 @@ import Icon from "./../../Icon";
 // Constants
 import { ICONS, STATE_HOOKS } from "./../../../constants";
 
-const Th = ({
+const SortButton = ({
     children,
-    isAlignedRight,
-    qaHook,
-    sort,
     columnName,
+    dataType,
+    sort,
     sortedColumnName,
-    sortedDirection,
-    ...props
+    sortedDirection
 }) => {
     const isSorted = sortedColumnName === columnName;
     const arrowDirection = (isSorted && sortedDirection) || "desc";
 
+    const classList = classNames({
+        "c-table__sort-button": true,
+        [`c-table__sort-button--${arrowDirection}`]: arrowDirection,
+        [STATE_HOOKS.isSorted]: isSorted
+    });
+
+    return (
+        <button
+            className={classList}
+            onClick={() => sort(columnName, arrowDirection, isSorted, dataType)}
+            type="button"
+        >
+            {children}
+            <Icon
+                className="c-table__sort-button-icon"
+                id={ICONS.arrowSolidSmallDown}
+            />
+        </button>
+    );
+};
+
+const Th = ({ children, isAlignedRight, qaHook, sort, ...props }) => {
     const classList = classNames({
         "c-table__th": true,
         "c-table__th--align-right": isAlignedRight,
@@ -27,34 +47,14 @@ const Th = ({
         [`qa-table-th-${qaHook}`]: qaHook
     });
 
-    const classListInner = classNames({
-        "c-table__sort-button": sort,
-        [`c-table__sort-button--${arrowDirection}`]: arrowDirection,
-        [STATE_HOOKS.isSorted]: isSorted
-    });
-
-    const sortColumn = (field, direction, sorted) => () =>
-        sort(field, direction, sorted);
-
-    const sortButton = (
-        <button
-            className={classListInner}
-            onClick={sortColumn(columnName, arrowDirection, isSorted)}
-            type="button"
-        >
-            {children}
-
-            <Icon
-                className="c-table__sort-button-icon"
-                id={ICONS.arrowSolidSmallDown}
-            />
-        </button>
+    const contentType = sort ? (
+        <SortButton {...props} children={children} sort={sort} />
+    ) : (
+        children
     );
 
-    const contentType = sort ? sortButton : children;
-
     return (
-        <th {...props} className={classList} scope="col">
+        <th className={classList} scope="col">
             {contentType}
         </th>
     );

@@ -9,6 +9,12 @@ import subtract from "./subtract";
  * @return {func} - subtract function with 2 params
  */
 
-const sortObjectKeyNumbers = field => (a, b) => subtract(a[field], b[field]);
+const sortObjectKeyNumbers = field => (a, b) => {
+    if (!isFinite(subtract(a[field], b[field]))) {
+        return !isFinite(a[field]) ? -1 : 1;
+    } else {
+        return subtract(a[field], b[field]);
+    }
+};
 
 export default sortObjectKeyNumbers;

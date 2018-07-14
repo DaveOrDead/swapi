@@ -4,7 +4,6 @@
  * @param  {number} b - Second number.
  * @return {number} - Value of `b` subtracted from `a`.
  */
-const subtract = (a, b) => a - b;
-
+const subtract = (a, b) => Number(a) - Number(b);
 
 export default subtract;
