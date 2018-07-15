@@ -26,6 +26,7 @@ const PlanetsTable = ({ id, planets, viewDetails }) => (
             <Table caption="Planets in the Star Wars universe" id={id}>
                 <TableHeader>
                     <Th
+                        aria-controls={id}
                         columnName="name"
                         dataType="string"
                         sort={sort}
@@ -36,6 +37,7 @@ const PlanetsTable = ({ id, planets, viewDetails }) => (
                     </Th>
                     <Th>Terrain</Th>
                     <Th
+                        aria-controls={id}
                         columnName="population"
                         dataType="number"
                         isAlignedRight

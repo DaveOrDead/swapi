@@ -18,12 +18,13 @@ const SearchField = ({
     return (
         <div className="c-search-field" role="search">
             <Label
-                forId={`id_${name}`}
+                forId={`id-${name}`}
                 isHidden={isLabelHidden}
                 text={labelText}
             />
 
             <input
+                id={`id-${name}`}
                 {...props}
                 autoComplete="off"
                 className="c-search-field__input"

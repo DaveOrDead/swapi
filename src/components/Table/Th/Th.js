@@ -7,15 +7,17 @@ import Icon from "./../../Icon";
 // Constants
 import { ICONS, STATE_HOOKS } from "./../../../constants";
 
+const getDirectionFull = dir => (dir === "asc" ? "ascending" : "descending");
+
 const SortButton = ({
     children,
     columnName,
     dataType,
+    isSorted,
     sort,
-    sortedColumnName,
-    sortedDirection
+    sortedDirection,
+    ...props
 }) => {
-    const isSorted = sortedColumnName === columnName;
     const arrowDirection = (isSorted && sortedDirection) || "desc";
 
     const classList = classNames({
@@ -26,6 +28,7 @@ const SortButton = ({
 
     return (
         <button
+            {...props}
             className={classList}
             onClick={() => sort(columnName, arrowDirection, isSorted, dataType)}
             type="button"
@@ -39,7 +42,17 @@ const SortButton = ({
     );
 };
 
-const Th = ({ children, isAlignedRight, qaHook, sort, ...props }) => {
+const Th = ({
+    children,
+    columnName,
+    isAlignedRight,
+    qaHook,
+    sort,
+    sortedColumnName,
+    sortedDirection,
+    ...props
+}) => {
+    const isSorted = columnName && sortedColumnName === columnName;
     const classList = classNames({
         "c-table__th": true,
         "c-table__th--align-right": isAlignedRight,
@@ -48,13 +61,24 @@ const Th = ({ children, isAlignedRight, qaHook, sort, ...props }) => {
     });
 
     const contentType = sort ? (
-        <SortButton {...props} children={children} sort={sort} />
+        <SortButton
+            {...props}
+            children={children}
+            columnName={columnName}
+            isSorted={isSorted}
+            sortedDirection={sortedDirection}
+            sort={sort}
+        />
     ) : (
         children
     );
 
     return (
-        <th className={classList} scope="col">
+        <th
+            aria-sort={isSorted ? getDirectionFull(sortedDirection) : null}
+            className={classList}
+            scope="col"
+        >
             {contentType}
         </th>
     );
