@@ -11,6 +11,7 @@ import {
     _Icons as Icons,
     Loading,
     SearchField,
+    SelectList,
     Spacing
 } from "./../../components";
 // Utils
@@ -186,14 +187,18 @@ class App extends Component {
                 <main role="main">
                     <Container isCentered>
                         <Spacing>
-                            <select
+                            <SelectList
+                                labelText="Filter on"
                                 name="isClientSideQuery"
                                 onChange={this.onChange}
+                                options={[
+                                    { id: 1, name: "Client side" },
+                                    { id: 2, name: "Server side" }
+                                ]}
                                 value={isClientSideQuery}
-                            >
-                                <option value="1">Client side</option>
-                                <option value="0">Server side</option>
-                            </select>
+                            />
+                        </Spacing>
+                        <Spacing>
                             <SearchField
                                 aria-controls={TABLE_ID}
                                 labelText="Search planets by name"

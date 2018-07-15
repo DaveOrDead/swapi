@@ -1,0 +1,61 @@
+/**
+ * The container `<span>` element used to apply the visual `<select>` element
+ * styles too.
+ */
+
+.c-form-control-select {
+    background-color: transparent;
+    display: block;
+    position: relative;
+}
+
+/**
+ * The `<select>` element.
+ *
+ * 1. Remove the visual user-agent styles.
+ * 2. Always want it to be the full width of its parent `<span>` element.
+ */
+
+.c-form-control-select__control {
+    appearance: none; /* [1] */
+    background: none; /* [2] */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* [1] */
+    border-radius: 0;
+    color: var(--g-color-white);
+    cursor: pointer;
+    display: block; /* [2] */
+    font-size: var(--g-font-size-small);
+    height: var(--g-spacing-3x-large);
+    padding: var(--g-spacing-x-small);
+    padding-right: var(--g-spacing-x-large);
+    text-align: left;
+    width: 100%; /* [2] */
+}
+
+.c-form-control-select__control:focus {
+    box-shadow: var(--g-focus-ring);
+    outline: none;
+}
+
+/**
+ * 1. Hide the arrow in IE 10.
+ */
+.c-form-control-select__control::-ms-expand {
+    display: none; /* [1] */
+}
+
+/**
+ * The caret icon.
+ * 1. Ensure click events work on the parent element.
+ * 2. Vertically align the icon to the right edge.
+ */
+.c-form-control-select__icon {
+    color: var(--g-color-white);
+    height: var(--g-spacing-x-small);
+    pointer-events: none; /* [1] */
+    position: absolute; /* [1] */
+    top: 50%; /* [2] */
+    transform: translateY(-50%); /* [2] */
+    width: var(--g-spacing);
+    right: var(--g-spacing-small);
+}

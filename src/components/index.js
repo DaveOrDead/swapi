@@ -9,6 +9,7 @@ import _Icons from "./_Icons";
 import Label from "./Label";
 import Loading from "./Loading";
 import SearchField from "./SearchField";
+import SelectList from "./SelectList";
 import Spacing from "./Spacing";
 import {
     Table,
@@ -33,6 +34,7 @@ export {
     Label,
     Loading,
     SearchField,
+    SelectList,
     Spacing,
     Table,
     TableBody,
