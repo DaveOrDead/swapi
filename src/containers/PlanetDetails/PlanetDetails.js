@@ -1,5 +1,5 @@
 // Vendor
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 // Components
 import { DataList, DataListItem } from "./../../components";
@@ -40,72 +40,49 @@ class PlanetDetails extends Component {
         }
     }
 
+    getResidentsValue = () => {
+        const { error, inhabitants, loadingResidents } = this.state;
+        let value;
+        if (loadingResidents) {
+            value = "Loading…";
+        } else if (inhabitants.length) {
+            value = inhabitants.map(i => i.data.name);
+        } else {
+            value = error ? error : "N/A";
+        }
+        return value;
+    };
+
     render() {
-        const { data, inhabitants, loadingResidents, error } = this.state;
+        const { data } = this.state;
 
         return (
-            <Fragment>
-                <DataList>
-                    <DataListItem
-                        title="Rotation Period"
-                        value={formatIfNumeric(data.rotation_period)}
-                    />
-                    <DataListItem
-                        title="Orbital Period"
-                        value={formatIfNumeric(data.orbital_period)}
-                    />
-                    <DataListItem
-                        title="Diameter"
-                        value={formatIfNumeric(data.diameter)}
-                    />
+            <DataList>
+                <DataListItem
+                    title="Orbital Period"
+                    value={formatIfNumeric(data.orbital_period)}
+                />
+                <DataListItem
+                    title="Diameter"
+                    value={formatIfNumeric(data.diameter)}
+                />
 
-                    <DataListItem title="Climate" value={data.climate} />
+                <DataListItem title="Climate" value={data.climate} />
 
-                    <DataListItem title="Gravity" value={data.gravity} />
+                <DataListItem title="Gravity" value={data.gravity} />
 
-                    <DataListItem title="Terrain" value={data.terrain} />
+                <DataListItem title="Terrain" value={data.terrain} />
 
-                    <DataListItem
-                        title="Surface water"
-                        value={data.surface_water}
-                    />
+                <DataListItem
+                    title="Surface water"
+                    value={data.surface_water}
+                />
 
-                    <div className="c-data-list__item">
-                        <dt className="c-data-list__title">Residents</dt>
-                        {loadingResidents ? (
-                            <dd className="c-data-list__value">
-                                Loading&hellip;
-                            </dd>
-                        ) : (
-                            <Fragment>
-                                {(inhabitants.length &&
-                                    inhabitants.map((res, i) => (
-                                        <dd
-                                            className="c-data-list__value"
-                                            key={i}
-                                        >
-                                            {res.data.name}
-                                        </dd>
-                                    ))) ||
-                                    ((error && (
-                                        <dd className="c-data-list__value">
-                                            {error}
-                                        </dd>
-                                    )) || (
-                                        <dd>
-                                            <abbr
-                                                className="c-data-list__value"
-                                                title="Not applicable"
-                                            >
-                                                N/A
-                                            </abbr>
-                                        </dd>
-                                    ))}
-                            </Fragment>
-                        )}
-                    </div>
-                </DataList>
-            </Fragment>
+                <DataListItem
+                    title="Residents"
+                    value={this.getResidentsValue()}
+                />
+            </DataList>
         );
     }
 }
