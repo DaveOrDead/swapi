@@ -5,7 +5,7 @@
 const ICONS = Object.freeze({
     arrowSolidSmallDown: "arrow-solid-small-down",
     cross: "cross",
-    sort: "magnifying-glass",
+    magnifyingGlass: "magnifying-glass",
     sort: "sort"
 });
 
