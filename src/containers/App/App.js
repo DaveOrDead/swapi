@@ -40,7 +40,7 @@ class App extends Component {
     state = {
         cachedPlanets: [],
         error: "",
-        isClientSideQuery: true,
+        isClientSideQuery: "1",
         isDialogOpen: false,
         isFirstRun: true,
         isLoading: true,
@@ -54,6 +54,12 @@ class App extends Component {
         dataType: "string",
         sortedDirection: "desc",
         sortedColumnName: "name"
+    };
+
+    onChange = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
     };
 
     sortCallBack = sortState => {
@@ -130,7 +136,7 @@ class App extends Component {
             },
             () => {
                 const { query } = this.state;
-                if (this.state.isClientSideQuery) {
+                if (this.state.isClientSideQuery === "1") {
                     this.debouncedClientSideQuery(query);
                 } else {
                     if (query.length < 5) {
@@ -162,6 +168,7 @@ class App extends Component {
     render() {
         const {
             error,
+            isClientSideQuery,
             isDialogOpen,
             isLoading,
             planets,
@@ -179,6 +186,14 @@ class App extends Component {
                 <main role="main">
                     <Container isCentered>
                         <Spacing>
+                            <select
+                                name="isClientSideQuery"
+                                onChange={this.onChange}
+                                value={isClientSideQuery}
+                            >
+                                <option value="1">Client side</option>
+                                <option value="0">Server side</option>
+                            </select>
                             <SearchField
                                 aria-controls={TABLE_ID}
                                 labelText="Search planets by name"
