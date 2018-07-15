@@ -1,4 +1,5 @@
 import API from "./api";
+import { matchQueryInArrayOfObjects } from "./array";
 import {
     formatIfNumeric,
     formatNumber,
@@ -14,6 +15,7 @@ export {
     formatIfNumeric,
     formatNumber,
     isNumeric,
+    matchQueryInArrayOfObjects,
     sortObjectKeyNumbers,
     sortObjectKeyStrings,
     subtract

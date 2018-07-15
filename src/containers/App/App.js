@@ -14,7 +14,7 @@ import {
     Spacing
 } from "./../../components";
 // Utils
-import { API } from "./../../utils";
+import { API, matchQueryInArrayOfObjects } from "./../../utils";
 
 const TABLE_ID = "id-planets-table";
 const PLANET_BASE_URL = "planets?format=json";
@@ -32,13 +32,17 @@ const getEndpoints = (total, pageMax, url) => {
 class App extends Component {
     constructor() {
         super();
+        this.debouncedClientSideQuery = debounce(150, this.clientSideQuery);
         this.debouncedQuery = debounce(500, this.sendQuery);
         this.throttledQuery = throttle(1000, this.sendQuery);
     }
 
     state = {
+        cachedPlanets: [],
         error: "",
+        isClientSideQuery: true,
         isDialogOpen: false,
+        isFirstRun: true,
         isLoading: true,
         planets: [],
         query: "",
@@ -53,7 +57,6 @@ class App extends Component {
     };
 
     sortCallBack = sortState => {
-        console.log("called");
         this._sortedDetails = sortState;
     };
 
@@ -82,6 +85,12 @@ class App extends Component {
                     planets: [...results, ...pagedResults],
                     tableKey: this.state.tableKey + 1
                 });
+                if (this.state.isFirstRun) {
+                    this.setState({
+                        cachedPlanets: [...results, ...pagedResults],
+                        isFirstRun: false
+                    });
+                }
             }
         } catch (err) {
             this.setState({
@@ -100,6 +109,18 @@ class App extends Component {
         this.getData(`${PLANET_BASE_URL}&search=${this.state.query}`);
     };
 
+    clientSideQuery = query => {
+        this.setState({
+            query,
+            planets: matchQueryInArrayOfObjects(
+                this.state.cachedPlanets,
+                "name",
+                query
+            ),
+            isLoading: false
+        });
+    };
+
     searchPlanets = e => {
         this.setState(
             {
@@ -109,10 +130,14 @@ class App extends Component {
             },
             () => {
                 const { query } = this.state;
-                if (query.length < 5) {
-                    this.throttledQuery(query);
+                if (this.state.isClientSideQuery) {
+                    this.debouncedClientSideQuery(query);
                 } else {
-                    this.debouncedQuery(query);
+                    if (query.length < 5) {
+                        this.throttledQuery(query);
+                    } else {
+                        this.debouncedQuery(query);
+                    }
                 }
             }
         );

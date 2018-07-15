@@ -25,7 +25,6 @@ class TableContainer extends Component {
 
     onSort = (sortedColumnName, sortedDirection, isSorted, dataType) => {
         const { data } = this.state;
-        console.log(this.props);
         const sortedData = !isSorted
             ? sort({
                   sortedColumnName,
