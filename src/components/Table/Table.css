@@ -82,6 +82,12 @@
     width: var(--g-spacing-small);
 }
 
+.c-table__sort-button-icon--sort {
+    height: var(--g-spacing-small);
+    transform: translateY(25%);
+    width: var(--g-spacing-small);
+}
+
 /**
  * 1. Flips the caret icon upside down when column sorted in ascending order.
  */

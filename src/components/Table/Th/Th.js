@@ -26,6 +26,8 @@ const SortButton = ({
         [STATE_HOOKS.isSorted]: isSorted
     });
 
+    const iconId = isSorted ? "arrowSolidSmallDown" : "sort";
+
     return (
         <button
             {...props}
@@ -38,8 +40,8 @@ const SortButton = ({
                 arrowDirection === "asc" ? "desc" : "asc"
             )}`}</span>
             <Icon
-                className="c-table__sort-button-icon"
-                id={ICONS.arrowSolidSmallDown}
+                className={`c-table__sort-button-icon c-table__sort-button-icon--${iconId}`}
+                id={ICONS[iconId]}
             />
         </button>
     );
