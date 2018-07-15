@@ -65,30 +65,6 @@ describe(`Th component`, () => {
         expect(wrapper.find("button.c-table__sort-button").length).toEqual(1);
     });
 
-    it(`should render a button modifier class for "sortedDirection"`, () => {
-        const wrapper = mount(
-            <TableLayout>
-                <Th sort={() => {}} sortedDirection="asc">
-                    {textNode}
-                </Th>
-            </TableLayout>
-        );
-        expect(wrapper.find("button.c-table__sort-button--asc").length).toEqual(
-            1
-        );
-    });
-
-    it(`${ASSERTIONS.stateHook} "isSorted"`, () => {
-        const wrapper = mount(
-            <TableLayout>
-                <Th isSorted sort={() => {}}>
-                    {textNode}
-                </Th>
-            </TableLayout>
-        );
-        expect(wrapper.find(`.${STATE_HOOKS.isSorted}`).length).toEqual(1);
-    });
-
     it(ASSERTIONS.qaHook, () => {
         const wrapper = mount(
             <TableLayout>

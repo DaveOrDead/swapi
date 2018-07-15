@@ -34,6 +34,9 @@ const SortButton = ({
             type="button"
         >
             {children}
+            <span className="h-hide-visually">{`: activate to sort ${getDirectionFull(
+                arrowDirection === "asc" ? "desc" : "asc"
+            )}`}</span>
             <Icon
                 className="c-table__sort-button-icon"
                 id={ICONS.arrowSolidSmallDown}
