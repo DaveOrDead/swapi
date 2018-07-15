@@ -46,6 +46,17 @@ class App extends Component {
         tableKey: 0
     };
 
+    _sortedDetails = {
+        dataType: "string",
+        sortedDirection: "desc",
+        sortedColumnName: "name"
+    };
+
+    sortCallBack = sortState => {
+        console.log("called");
+        this._sortedDetails = sortState;
+    };
+
     async getData(url = PLANET_BASE_URL) {
         this._waitingFor = url;
         try {
@@ -162,6 +173,8 @@ class App extends Component {
                                             key={`planetTable${tableKey}`}
                                             planets={planets}
                                             viewDetails={this.openDialog}
+                                            sortedDetails={this._sortedDetails}
+                                            sortCallBack={this.sortCallBack}
                                         />
                                     )) ||
                                     ((error && <p>{error}</p>) || (

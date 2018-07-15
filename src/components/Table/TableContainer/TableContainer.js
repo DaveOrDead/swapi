@@ -25,6 +25,7 @@ class TableContainer extends Component {
 
     onSort = (sortedColumnName, sortedDirection, isSorted, dataType) => {
         const { data } = this.state;
+        console.log(this.props);
         const sortedData = !isSorted
             ? sort({
                   sortedColumnName,
@@ -33,11 +34,22 @@ class TableContainer extends Component {
                   dataType
               })
             : data.reverse();
-        this.setState({
-            data: sortedData,
-            sortedDirection: reverseDirection(sortedDirection),
-            sortedColumnName
-        });
+        this.setState(
+            {
+                data: sortedData,
+                sortedDirection: reverseDirection(sortedDirection),
+                sortedColumnName
+            },
+            () => {
+                if (this.props.sortCallBack) {
+                    this.props.sortCallBack({
+                        sortedColumnName,
+                        sortedDirection,
+                        dataType
+                    });
+                }
+            }
+        );
     };
 
     render() {
