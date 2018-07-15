@@ -5,16 +5,27 @@ import classNames from "classnames";
 // Assets
 import "./../Table.css";
 
-const Table = ({ children, qaHook }) => {
+const Table = ({ caption, children, qaHook, ...props }) => {
     const classList = classNames({
         "c-table": true,
         [`qa-table-${qaHook}`]: qaHook
     });
 
-    return <table className={classList}>{children}</table>;
+    return (
+        <table {...props} className={classList}>
+            {!!caption && (
+                <caption className="h-hide-visually">{caption}</caption>
+            )}
+            {children}
+        </table>
+    );
 };
 
 Table.propTypes = {
+    /**
+     * A description of the table
+     */
+    caption: PropTypes.string,
     /**
      * Child elements
      */

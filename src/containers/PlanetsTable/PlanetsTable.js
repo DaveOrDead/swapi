@@ -15,7 +15,7 @@ import {
 // Utils
 import { formatIfNumeric } from "./../../utils";
 
-const PlanetsTable = ({ planets, viewDetails }) => (
+const PlanetsTable = ({ id, planets, viewDetails }) => (
     <TableContainer
         data={planets}
         sortedDirection="desc"
@@ -23,7 +23,7 @@ const PlanetsTable = ({ planets, viewDetails }) => (
         dataType="string"
     >
         {({ data, sort, sortedDirection, sortedColumnName }) => (
-            <Table>
+            <Table caption="Planets in the Star Wars universe" id={id}>
                 <TableHeader>
                     <Th
                         columnName="name"

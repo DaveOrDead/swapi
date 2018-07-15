@@ -16,6 +16,7 @@ import {
 // Utils
 import { API } from "./../../utils";
 
+const TABLE_ID = "id-planets-table";
 const PLANET_BASE_URL = "planets?format=json";
 
 const getEndpoints = (total, pageMax, url) => {
@@ -139,10 +140,11 @@ class App extends Component {
 
                 <Header />
 
-                <main>
+                <main role="main">
                     <Container isCentered>
                         <Spacing>
                             <SearchField
+                                aria-controls={TABLE_ID}
                                 labelText="Search planets by name"
                                 name="planet-search"
                                 onChange={this.searchPlanets}
@@ -156,6 +158,7 @@ class App extends Component {
                                 {(planets &&
                                     planets.length && (
                                         <PlanetsTable
+                                            id={TABLE_ID}
                                             key={`planetTable${tableKey}`}
                                             planets={planets}
                                             viewDetails={this.openDialog}

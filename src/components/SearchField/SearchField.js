@@ -16,7 +16,7 @@ const SearchField = ({
     ...props
 }) => {
     return (
-        <div className="c-search-field">
+        <div className="c-search-field" role="search">
             <Label
                 forId={`id_${name}`}
                 isHidden={isLabelHidden}
